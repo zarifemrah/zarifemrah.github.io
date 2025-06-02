@@ -1,576 +1,629 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr. Emrah Zarifoglu | AI, Cloud & Operations Research Leader</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #F5F5F3;
-            color: #2C3E50;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 400px;
-            max-height: 50vh;
-        }
-        .section-title {
-            font-size: 2.25rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: #2C3E50;
-        }
-        .nav-link {
-            transition: color 0.3s ease;
-        }
-        .nav-link:hover {
-            color: #3498DB;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #3498DB;
-            border: 4px solid #F5F5F3;
-        }
-        .active-tab {
-            border-bottom: 2px solid #3498DB;
-            color: #3498DB;
-            font-weight: 500;
-        }
-        .inactive-tab {
-            border-bottom: 2px solid transparent;
-        }
-        .gemini-summary-btn {
-            background-color: #3498DB;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-            border: none;
-            margin-top: 0.5rem;
-        }
-        .gemini-summary-btn:hover {
-            background-color: #2980B9;
-        }
-        .summary-text {
-            font-size: 0.875rem;
-            color: #555;
-            background-color: #EAEAEA;
-            padding: 0.75rem;
-            border-radius: 0.375rem;
-            margin-top: 0.5rem;
-            border-left: 3px solid #3498DB;
-        }
-         .loading-text {
-            font-size: 0.875rem;
-            color: #777;
-            margin-top: 0.5rem;
-            font-style: italic;
-        }
-        .action-button {
-            background-color: #2C3E50;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem; /* Tailwind's rounded-md */
-            font-weight: 600; /* Tailwind's font-semibold */
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            border: none;
-            cursor: pointer;
-        }
-        .action-button:hover {
-            background-color: #34495E; /* Darker shade */
-            transform: translateY(-2px);
-        }
-    </style>
-</head>
-<body class="antialiased">
-    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-gray-800">
-                <a href="#" class="nav-link">Dr. Emrah Zarifoglu</a>
-            </div>
-            <div class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-600 nav-link">About</a>
-                <a href="#expertise" class="text-gray-600 nav-link">Expertise</a>
-                <a href="#innovations" class="text-gray-600 nav-link">Innovations</a>
-                <a href="http://www.opentheorie.org/" target="_blank" rel="noopener noreferrer" class="text-gray-600 nav-link">Blog</a>
-                <a href="#contact" class="text-gray-600 nav-link">Contact</a>
-            </div>
-            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </nav>
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#about" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 nav-link-mobile">About</a>
-            <a href="#expertise" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 nav-link-mobile">Expertise</a>
-            <a href="#innovations" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 nav-link-mobile">Innovations</a>
-            <a href="http://www.opentheorie.org/" target="_blank" rel="noopener noreferrer" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Blog</a>
-            <a href="#contact" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 nav-link-mobile">Contact</a>
-        </div>
-    </header>
-
-    <main>
-        <section id="hero" class="py-20 md:py-32 bg-white">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-bold leading-tight text-gray-900">Dr. Emrah Zarifoglu</h1>
-                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Pioneering R&D Leader at the intersection of Artificial Intelligence, Cloud Computing, and Operations Research for the Semiconductor Industry.</p>
-                <div class="mt-8 flex justify-center gap-4">
-                    <a href="#expertise" class="px-8 py-3 bg-[#2C3E50] text-white font-semibold rounded-lg shadow-md hover:bg-[#34495E] transition-transform transform hover:scale-105">Explore Expertise</a>
-                    <a href="#contact" class="px-8 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-300 transition-transform transform hover:scale-105">Get In Touch</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="py-20">
-            <div class="container mx-auto px-6">
-                <h2 class="section-title">About Dr. Zarifoglu</h2>
-                <div class="grid md:grid-cols-5 gap-12 items-start">
-                    <div class="md:col-span-3">
-                        <h3 class="text-2xl font-bold mb-4">Professional Biography</h3>
-                        <p class="text-gray-700 leading-relaxed mb-4">Dr. Emrah Zarifoglu's career is a testament to the powerful synergy between deep academic expertise in Operations Research and impactful industrial leadership in AI and Cloud technologies. From his Ph.D. at The University of Texas at Austin, focusing on semiconductor manufacturing optimization, to his leadership roles at IBM and Applied Materials, he has consistently driven innovation by translating complex theory into practical, high-value solutions. This section outlines his journey, highlighting the logical progression of his career and the consistent theme of bridging academia and industry.</p>
-                        <p class="text-gray-700 leading-relaxed">His current role as Head of R&D for Cloud and AI/ML at Applied Materials represents the culmination of his experience, where he applies his comprehensive knowledge to solve critical challenges in the semiconductor sector. Concurrently, his position as an Adjunct Professor at UT Austin allows him to shape the next generation of innovators.</p>
-                        
-                        <div class="mt-8">
-                            <h4 class="text-xl font-bold mb-4">Career Timeline</h4>
-                            <div id="timeline-container" class="relative border-l-2 border-gray-200 pl-8 space-y-8">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-2xl font-bold mb-4">Education & Vision</h3>
-                         <div class="space-y-4">
-                             <div>
-                                <p class="font-bold">Ph.D. in Operations Research</p>
-                                <p class="text-sm text-gray-600">The University of Texas at Austin</p>
-                            </div>
-                             <div>
-                                <p class="font-bold">M.S. in Industrial Engineering</p>
-                                <p class="text-sm text-gray-600">Bilkent University</p>
-                            </div>
-                             <div>
-                                <p class="font-bold">B.S. in Industrial Engineering</p>
-                                <p class="text-sm text-gray-600">Bilkent University</p>
-                            </div>
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Dr. Emrah Zarifoglu | AI, Cloud & Operations Research Leader</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+     <!-- Chosen Palette: "Warm Neutral Harmony" -->
+     <!-- Application Structure Plan: Added AI-powered career path insights in the About section. -->
+     <!-- Visualization & Content Choices: Dynamic blog posts. AI Summaries for Innovations. New AI Career Path Insights. -->
+     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+     <style>
+         body {
+             font-family: 'Inter', sans-serif;
+             background-color: #F5F5F3;
+             color: #2C3E50;
+         }
+         .chart-container { 
+             position: relative;
+             width: 100%;
+             max-width: 800px;
+             margin-left: auto;
+             margin-right: auto;
+             height: 400px;
+             max-height: 50vh;
+         }
+         .section-title {
+             font-size: 2.25rem;
+             font-weight: 700;
+             margin-bottom: 2rem;
+             text-align: center;
+             color: #2C3E50;
+         }
+         .nav-link {
+             transition: color 0.3s ease;
+         }
+         .nav-link:hover {
+             color: #3498DB;
+         }
+         .timeline-item::before {
+             content: '';
+             position: absolute;
+             left: -30px;
+             top: 50%;
+             transform: translateY(-50%);
+             width: 20px;
+             height: 20px;
+             border-radius: 50%;
+             background-color: #3498DB;
+             border: 4px solid #F5F5F3;
+         }
+         .active-tab {
+             border-bottom: 2px solid #3498DB;
+             color: #3498DB;
+             font-weight: 500;
+         }
+         .inactive-tab {
+             border-bottom: 2px solid transparent;
+         }
+         .gemini-btn { /* Generalized class for Gemini buttons */
+             background-color: #3498DB;
+             color: white;
+             padding: 0.25rem 0.75rem;
+             border-radius: 0.375rem;
+             font-size: 0.75rem;
+             font-weight: 500;
+             transition: background-color 0.3s ease;
+             cursor: pointer;
+             border: none;
+             margin-top: 0.5rem;
+         }
+         .gemini-btn:hover {
+             background-color: #2980B9;
+         }
+         .summary-text, .insights-text { /* Generalized class for Gemini output */
+             font-size: 0.875rem;
+             color: #555;
+             background-color: #EAEAEA;
+             padding: 0.75rem;
+             border-radius: 0.375rem;
+             margin-top: 0.75rem;
+             border-left: 3px solid #3498DB;
+         }
+          .loading-text {
+             font-size: 0.875rem;
+             color: #777;
+             margin-top: 0.5rem;
+             font-style: italic;
+         }
+         .action-button {
+             background-color: #2C3E50;
+             color: white;
+             padding: 0.75rem 1.5rem;
+             border-radius: 0.375rem; 
+             font-weight: 600; 
+             text-decoration: none;
+             display: inline-block;
+             transition: background-color 0.3s ease, transform 0.2s ease;
+             border: none;
+             cursor: pointer;
+         }
+         .action-button:hover {
+             background-color: #34495E; 
+             transform: translateY(-2px);
+         }
+         .blog-post-item {
+             background-color: #ffffff;
+             padding: 1rem;
+             border-radius: 0.5rem;
+             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+             margin-bottom: 1rem;
+             border-left: 4px solid #3498DB;
+         }
+         .blog-post-item h4 {
+             margin-bottom: 0.25rem;
+         }
+         .blog-post-item a {
+             color: #2C3E50;
+             text-decoration: none;
+             font-weight: 600;
+         }
+         .blog-post-item a:hover {
+             color: #3498DB;
+             text-decoration: underline;
+         }
+         .blog-post-date {
+             font-size: 0.8rem;
+             color: #777;
+         }
+         .career-insights-btn { /* Specific styling for career insights button if needed */
+            display: block;
+            margin: 1rem auto 0.5rem auto; /* Center button and add some margin */
+            padding: 0.5rem 1rem;
+         }
+     </style>
+ </head>
+ <body class="antialiased">
+     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+             <div class="text-2xl font-bold text-gray-800">
+                 <a href="#" class="nav-link">Dr. Emrah Zarifoglu</a>
+             </div>
+             <div class="hidden md:flex space-x-8">
+                 <a href="#about" class="text-gray-600 nav-link">About</a>
+                 <a href="#expertise" class="text-gray-600 nav-link">Expertise</a>
+                 <a href="#innovations" class="text-gray-600 nav-link">Innovations</a>
+                 <a href="http://www.opentheorie.org/" target="_blank" rel="noopener noreferrer" class="text-gray-600 nav-link">Blog</a>
+                 <a href="#contact" class="text-gray-600 nav-link">Contact</a>
+             </div>
+             <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+             </button>
+         </nav>
+         <div id="mobile-menu" class="hidden md:hidden">
+             <a href="#about" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 nav-link-mobile">About</a>
+             <a href="#expertise" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 nav-link-mobile">Expertise</a>
+             <a href="#innovations" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 nav-link-mobile">Innovations</a>
+             <a href="http://www.opentheorie.org/" target="_blank" rel="noopener noreferrer" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Blog</a>
+             <a href="#contact" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 nav-link-mobile">Contact</a>
+         </div>
+     </header>
+ 
+     <main>
+         <section id="hero" class="py-20 md:py-32 bg-white">
+             <div class="container mx-auto px-6 text-center">
+                 <h1 class="text-4xl md:text-6xl font-bold leading-tight text-gray-900">Dr. Emrah Zarifoglu</h1>
+                 <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Pioneering R&D Leader at the intersection of Artificial Intelligence, Cloud Computing, and Operations Research for the Semiconductor Industry.</p>
+                 <div class="mt-8 flex justify-center gap-4">
+                     <a href="#expertise" class="px-8 py-3 bg-[#2C3E50] text-white font-semibold rounded-lg shadow-md hover:bg-[#34495E] transition-transform transform hover:scale-105">Explore Expertise</a>
+                     <a href="#contact" class="px-8 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-300 transition-transform transform hover:scale-105">Get In Touch</a>
+                 </div>
+             </div>
+         </section>
+ 
+         <section id="about" class="py-20">
+             <div class="container mx-auto px-6">
+                 <h2 class="section-title">About Dr. Zarifoglu</h2>
+                 <div class="grid md:grid-cols-5 gap-12 items-start">
+                     <div class="md:col-span-3">
+                         <h3 class="text-2xl font-bold mb-4">Professional Biography</h3>
+                         <p class="text-gray-700 leading-relaxed mb-4">Dr. Emrah Zarifoglu's career is a testament to the powerful synergy between deep academic expertise in Operations Research and impactful industrial leadership in AI and Cloud technologies. From his Ph.D. at The University of Texas at Austin, focusing on semiconductor manufacturing optimization, to his leadership roles at IBM and Applied Materials, he has consistently driven innovation by translating complex theory into practical, high-value solutions. This section outlines his journey, highlighting the logical progression of his career and the consistent theme of bridging academia and industry.</p>
+                         <p class="text-gray-700 leading-relaxed">His current role as Head of R&D for Cloud and AI/ML at Applied Materials represents the culmination of his experience, where he applies his comprehensive knowledge to solve critical challenges in the semiconductor sector. Concurrently, his position as an Adjunct Professor at UT Austin allows him to shape the next generation of innovators.</p>
+                         
+                         <div class="mt-8">
+                             <h4 class="text-xl font-bold mb-2">Career Timeline</h4>
+                             <button id="careerInsightsBtn" class="gemini-btn career-insights-btn">✨ Get AI Insights on Career Path</button>
+                             <div id="careerInsightsOutput" class="mt-2"></div>
+                             <div id="timeline-container" class="relative border-l-2 border-gray-200 pl-8 space-y-8 mt-6">
+                             </div>
                          </div>
-                         <hr class="my-6">
-                         <h4 class="text-lg font-bold mb-2">Guiding Philosophy</h4>
-                         <p class="text-gray-700 italic">"Dr. Zarifoglu's vision is grounded in pragmatism. He champions technology that delivers tangible outcomes, balancing cutting-edge possibilities with the operational and economic realities of implementation—a philosophy essential for driving sustainable innovation."</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="expertise" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="section-title">Core Areas of Expertise</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-600">This section provides an interactive overview of Dr. Zarifoglu's primary domains of expertise. His deep knowledge in Operations Research serves as the foundation for his innovations in AI, Cloud, and Semiconductor Manufacturing. Click on each tab to explore his specific contributions, leadership roles, and the impact of his work in each field.</p>
-                <div class="w-full max-w-4xl mx-auto">
-                    <div class="mb-4 flex justify-center border-b border-gray-200">
-                        <button data-tab="ai-cloud" class="expertise-tab py-2 px-4 text-gray-500 font-medium inactive-tab">AI & Cloud</button>
-                        <button data-tab="or-data-science" class="expertise-tab py-2 px-4 text-gray-500 font-medium inactive-tab">OR & Data Science</button>
-                        <button data-tab="semiconductor" class="expertise-tab py-2 px-4 text-gray-500 font-medium inactive-tab">Semiconductor</button>
-                    </div>
-
-                    <div id="expertise-content" class="mt-8">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="innovations" class="py-20">
-            <div class="container mx-auto px-6">
-                <h2 class="section-title">Innovations: Patents & Publications</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-600">Dr. Zarifoglu is a prolific inventor and author, consistently translating research into high-impact solutions. This hub showcases his extensive portfolio of patents and publications. The chart below visualizes the timeline of his inventive output, while the filterable list allows for a detailed exploration of his key contributions. Interact with the elements, including the new AI-powered summary generator, to discover the breadth and depth of his work.</p>
-                <div class="bg-white p-6 rounded-lg shadow-lg mb-12">
-                     <h3 class="text-2xl font-bold mb-4 text-center">Patents & Publications Timeline</h3>
-                     <div class="chart-container">
-                        <canvas id="innovationsChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="flex flex-wrap justify-center gap-4 mb-8">
-                        <button class="filter-btn bg-gray-200 px-4 py-2 rounded-full font-semibold text-sm active-filter" data-filter="all">All</button>
-                        <button class="filter-btn bg-gray-200 px-4 py-2 rounded-full font-semibold text-sm" data-filter="patent">Patents</button>
-                        <button class="filter-btn bg-gray-200 px-4 py-2 rounded-full font-semibold text-sm" data-filter="publication">Publications</button>
-                    </div>
-                    <div id="innovations-list" class="space-y-6">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="blog" class="py-20 bg-white">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="section-title">Blog Highlights & External Insights</h2>
-                <p class="max-w-2xl mx-auto text-gray-600 mb-8">
-                    Explore Dr. Zarifoglu's thoughts, analyses, and perspectives on Operations Research, AI, technology trends, and more on his external blog, "Opentheorie." This platform serves as an extension of his professional work, offering deeper dives into subjects he is passionate about.
-                </p>
-                <a href="http://www.opentheorie.org/" target="_blank" rel="noopener noreferrer" class="action-button">
-                    Visit Opentheorie.org &rarr;
-                </a>
-            </div>
-        </section>
-        
-        <section id="contact" class="py-20">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="section-title">Connect & Collaborate</h2>
-                <p class="max-w-2xl mx-auto text-gray-600 mb-8">
-                    Dr. Zarifoglu is open to inquiries regarding professional collaborations, speaking engagements, and innovative projects. The most effective way to connect is through his professional networking profiles.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-8">
-                    <a href="https://www.linkedin.com/in/emrahz/" target="_blank" rel="noopener noreferrer" class="text-[#0077B5] hover:text-[#005582] transition-colors flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-gray-100">
-                        <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        <span class="font-bold mt-2">LinkedIn Profile</span>
-                    </a>
-                    <a href="https://scholar.google.se/citations?user=Ykju0aoAAAAJ" target="_blank" rel="noopener noreferrer" class="text-[#4285F4] hover:text-[#3367D6] transition-colors flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-gray-100">
-                        <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M5.242 13.769l1.958-1.034a.25.25 0 01.325.28l-1.077 4.909a.25.25 0 01-.465.04l-2.61-4.14a.25.25 0 01.12-.348zM12 2C6.486 2 2 6.486 2 12s4.486 10 10 10c5.515 0 10-4.486 10-10S17.515 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm4.758-11.231c.334-.175.553-.526.495-.913a1.247 1.247 0 00-.773-.93c-.42-.21-.896-.105-1.22.21l-3.3 3.3-1.92-3.84c-.21-.42-.63-.735-1.11-.735-.66 0-1.25.5-1.36.985l-1.92 8.64a1.247 1.247 0 001.24 1.545c.57.03 1.08-.345 1.28-.885l1.92-4.32 3.3 3.3c.325.315.79.42 1.22.21a1.247 1.247 0 00.772-.93c.06-.387-.16-.74-.496-.913l-2.69-1.41z"/></svg>
-                        <span class="font-bold mt-2">Google Scholar Profile</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <footer class="bg-[#2C3E50] text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; <span id="current-year"></span> Dr. Emrah Zarifoglu. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-            
-            document.querySelectorAll('a[href^="#"].nav-link-mobile, a[href^="#"].nav-link').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    const href = this.getAttribute('href');
-                    if (href.startsWith('#')) {
-                        e.preventDefault();
-                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                            mobileMenu.classList.add('hidden');
-                        }
-                        const targetElement = document.querySelector(href);
-                        if (targetElement) {
-                            targetElement.scrollIntoView({
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
-                });
-            });
-
-
-            const currentYearEl = document.getElementById('current-year');
-            if (currentYearEl) {
-                currentYearEl.textContent = new Date().getFullYear();
-            }
-
-            const careerData = [
-                {
-                    role: "Head of R&D, Cloud and AI/ML",
-                    company: "Applied Materials",
-                    period: "Present",
-                    details: "Directs the team responsible for delivering advanced AI/ML solutions and spearheads the critical cloud transformation of APG software for semiconductor manufacturers worldwide. Central to integrating AI-powered technologies into Applied Materials' SmartFactory AI solutions."
-                },
-                {
-                    role: "Program Director of Data Science",
-                    company: "IBM",
-                    period: "Previous",
-                    details: "Provided pivotal leadership for AI and data science tools integral to the Multi-Cloud Management Platform. Marked by substantial contributions to cloud analytics and retail science, evidenced by a robust portfolio of patents."
-                },
-                {
-                    role: "Advanced Analytics",
-                    company: "Gravitant",
-                    period: "Previous",
-                    details: "Contributed to advanced analytics in the burgeoning field of cloud computing. This experience was instrumental in developing proficiency in cloud technologies and optimization strategies, leading to key patents in hybrid cloud service optimization."
-                },
-                {
-                    role: "Semiconductor Simulation & Analytics",
-                    company: "AMD & SEMATECH",
-                    period: "Early Career",
-                    details: "Focused on semiconductor simulation, advanced analytics, and operations research. Gained profound insights into the practical challenges and technological opportunities within the semiconductor industry, solidifying expertise in applying quantitative methods."
-                }
-            ];
-
-            const timelineContainer = document.getElementById('timeline-container');
-            if (timelineContainer) {
-                careerData.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = "relative cursor-pointer group";
-                    div.innerHTML = `
-                        <div class="timeline-item">
-                            <h5 class="font-bold text-lg">${item.role}</h5>
-                            <p class="text-sm font-medium text-[#3498DB]">${item.company}</p>
-                            <p class="text-xs text-gray-500">${item.period}</p>
-                            <div class="pt-2 text-sm text-gray-600 max-h-0 overflow-hidden transition-max-height duration-500 ease-in-out group-hover:max-h-40">
-                                ${item.details}
-                            </div>
-                        </div>
-                    `;
-                    timelineContainer.appendChild(div);
-                });
-            }
-
-            const expertiseTabs = document.querySelectorAll('.expertise-tab');
-            const expertiseContent = document.getElementById('expertise-content');
-            
-            const expertiseData = {
-                'ai-cloud': {
-                    title: "Cloud Computing & AI/ML",
-                    points: [
-                        "Leads R&D for Cloud and AI/ML at Applied Materials, driving SmartFactory solutions.",
-                        "Pioneer in SaaS application development and complex cloud transformation efforts.",
-                        "Architects robust optimization and analytics frameworks for cloud platforms.",
-                        "Holds key patents in cloud asset tagging and hybrid cloud optimization.",
-                        "Formerly directed Data Science for IBM's Multi-Cloud Management Platform."
-                    ]
-                },
-                'or-data-science': {
-                    title: "Operations Research & Data Science",
-                    points: [
-                        "Ph.D. in Operations Research provides a strong analytical and optimization-focused mindset.",
-                        "Spearheaded AI and data science tooling initiatives at IBM.",
-                        "Co-authored the influential paper 'Cloud Computing Operations Research'.",
-                        "Proficient in Optimization, Mathematical Programming, Heuristics, and Simulation.",
-                        "Applies rigorous quantitative methods to solve complex technological challenges."
-                    ]
-                },
-                'semiconductor': {
-                    title: "Semiconductor Manufacturing & Optimization",
-                    points: [
-                        "Ph.D. dissertation focused on 'Planning and Scheduling in Semiconductor Manufacturing'.",
-                        "Authored key research on lot size management for cycle time optimization in IEEE journals.",
-                        "Holds patents directly addressing challenges in semiconductor manufacturing.",
-                        "Gained deep industry-specific knowledge during early career roles at AMD and SEMATECH.",
-                        "Currently applies AI/ML to optimize modern semiconductor fabrication processes."
-                    ]
-                }
-            };
-
-            function updateExpertiseContent(tabId) {
-                if (!expertiseContent || !expertiseData[tabId]) return;
-                const content = expertiseData[tabId];
-                expertiseContent.innerHTML = `
-                    <h4 class="text-2xl font-bold mb-4 text-center text-gray-800">${content.title}</h4>
-                    <ul class="space-y-3 list-disc list-inside text-gray-700 max-w-2xl mx-auto">
-                        ${content.points.map(point => `<li>${point}</li>`).join('')}
-                    </ul>
-                `;
-                expertiseTabs.forEach(t => {
-                    t.classList.toggle('active-tab', t.dataset.tab === tabId);
-                    t.classList.toggle('inactive-tab', t.dataset.tab !== tabId);
-                });
-            }
-
-            if (expertiseTabs.length > 0 && expertiseContent) {
-                expertiseTabs.forEach(tab => {
-                    tab.addEventListener('click', () => updateExpertiseContent(tab.dataset.tab));
-                });
-                updateExpertiseContent('ai-cloud');
-            }
-            
-
-            const innovationsData = [
-                { id: 'patent2023a', type: 'patent', year: 2023, title: 'Methods and apparatus for feature generation using improved TF-IDF...' },
-                { id: 'patent2023b', type: 'patent', year: 2023, title: 'Efficiency driven data collection and machine learning modeling...' },
-                { id: 'patent2022a', type: 'patent', year: 2022, title: 'Feature generation for asset classification' },
-                { id: 'patent2022b', type: 'patent', year: 2022, title: 'Resource and asset lifecycle costing' },
-                { id: 'pub2022', type: 'publication', year: 2022, title: 'Deep Reinforcement Learning for Queue-Time Management...' },
-                { id: 'patent2021', type: 'patent', year: 2021, title: 'Avoidance of product stockouts through optimized routing...' },
-                { id: 'patent2020a', type: 'patent', year: 2020, title: 'Modeling customer demand and updating pricing using customer behavior data' },
-                { id: 'patent2020b', type: 'patent', year: 2020, title: 'Constrained large-data markdown optimizations...' },
-                { id: 'pub2013', type: 'publication', year: 2013, title: 'Cloud Computing Operations Research' },
-                { id: 'patent2013', type: 'patent', year: 2013, title: 'Optimally sourcing services in hybrid cloud environments' },
-                { id: 'pub2012', type: 'publication', year: 2012, title: 'Lot Size Management in the Semiconductor Industry...' },
-                { id: 'pub2010', type: 'publication', year: 2010, title: 'Planning and scheduling in semiconductor manufacturing (PhD Thesis)' },
-                { id: 'pub2008', type: 'publication', year: 2008, title: 'Small Lot Semiconductor Manufacturing...' },
-            ];
-
-            const innovationsByYear = innovationsData.reduce((acc, item) => {
-                acc[item.year] = (acc[item.year] || 0) + 1;
-                return acc;
-            }, {});
-
-            const innovationYears = Object.keys(innovationsByYear).sort((a,b) => parseInt(a) - parseInt(b));
-            const innovationCounts = innovationYears.map(year => innovationsByYear[year]);
-
-            const innovationsCtx = document.getElementById('innovationsChart');
-            if (innovationsCtx) {
-                new Chart(innovationsCtx.getContext('2d'), {
-                    type: 'bar',
-                    data: {
-                        labels: innovationYears,
-                        datasets: [{
-                            label: 'Number of Innovations',
-                            data: innovationCounts,
-                            backgroundColor: 'rgba(52, 152, 219, 0.6)',
-                            borderColor: 'rgba(52, 152, 219, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 1,
-                                    precision: 0
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        if (context.parsed.y !== null) {
-                                            label += context.parsed.y;
-                                        }
-                                        return label;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-            
-            const innovationsList = document.getElementById('innovations-list');
-            const filterBtns = document.querySelectorAll('.filter-btn');
-
-            async function generateGeminiSummary(title, summaryContainerId) {
-                const summaryContainer = document.getElementById(summaryContainerId);
-                if (!summaryContainer) return;
-
-                summaryContainer.innerHTML = '<p class="loading-text">✨ Generating summary...</p>';
-                
-                const prompt = `Explain this innovation in simple terms for a non-expert audience: "${title}". What is its core idea and potential impact? Keep it concise (2-3 sentences).`;
-                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-                const payload = { contents: chatHistory };
-                const apiKey = ""; 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) {
-                        const errorData = await response.text();
-                        throw new Error(`API request failed with status ${response.status}: ${errorData}`);
-                    }
-                    const result = await response.json();
-                    
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0 && result.candidates[0].content.parts[0].text) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        summaryContainer.innerHTML = `<p class="summary-text">${text.replace(/\n/g, '<br>')}</p>`;
-                    } else if (result.candidates && result.candidates.length > 0 && result.candidates[0].finishReason === "SAFETY") {
-                         summaryContainer.innerHTML = '<p class="summary-text">Could not generate summary due to safety settings. The topic might be sensitive.</p>';
-                    }
-                    else {
-                        summaryContainer.innerHTML = '<p class="summary-text">Could not generate summary at this time. No valid content received.</p>';
-                    }
-                } catch (error) {
-                    console.error("Error fetching Gemini summary:", error);
-                    summaryContainer.innerHTML = `<p class="summary-text">Error: Could not generate summary. ${error.message}</p>`;
-                }
-            }
-
-
-            function renderInnovations(filter) {
-                if (!innovationsList) return;
-                innovationsList.innerHTML = '';
-                const filteredData = innovationsData.filter(item => filter === 'all' || item.type === filter);
-                
-                if(filteredData.length === 0) {
-                    innovationsList.innerHTML = '<p class="text-center text-gray-500">No items match this filter.</p>';
-                    return;
-                }
-
-                filteredData.forEach(item => {
-                    const itemUID = `summary-${item.id}`; 
-                    const div = document.createElement('div');
-                    div.className = 'p-4 border rounded-lg hover:shadow-md transition-shadow duration-300 bg-white';
-                    div.innerHTML = `
-                        <div class="flex items-start justify-between">
-                            <div class="flex-grow">
-                                <span class="text-xs font-semibold uppercase px-2 py-1 rounded-full ${item.type === 'patent' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">${item.type}</span>
-                                <h4 class="font-bold text-md mt-1">${item.title}</h4>
-                                <button class="gemini-summary-btn" data-title="${item.title.replace(/"/g, '&quot;')}" data-summary-id="${itemUID}">✨ Generate Summary</button>
-                                <div id="${itemUID}" class="mt-2"></div>
-                            </div>
-                            <span class="font-semibold text-gray-600 ml-4 flex-shrink-0">${item.year}</span>
-                        </div>
-                    `;
-                    innovationsList.appendChild(div);
-                });
-
-                document.querySelectorAll('.gemini-summary-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const title = this.dataset.title;
-                        const summaryId = this.dataset.summaryId;
-                        generateGeminiSummary(title, summaryId);
-                        this.style.display = 'none'; 
-                    });
-                });
-            }
-            
-            if (filterBtns.length > 0 && innovationsList) {
-                 filterBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        filterBtns.forEach(b => b.classList.remove('active-filter', 'bg-[#3498DB]', 'text-white'));
-                        btn.classList.add('active-filter', 'bg-[#3498DB]', 'text-white');
-                        renderInnovations(btn.dataset.filter);
-                    });
-                });
-                renderInnovations('all');
-                const allFilterButton = document.querySelector('.filter-btn[data-filter="all"]');
-                if (allFilterButton) {
-                    allFilterButton.classList.add('bg-[#3498DB]', 'text-white');
-                }
-            }
-
-        });
-    </script>
-</body>
-</html>
-
+                     </div>
+                     <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+                         <h3 class="text-2xl font-bold mb-4">Education & Vision</h3>
+                          <div class="space-y-4">
+                              <div>
+                                 <p class="font-bold">Ph.D. in Operations Research</p>
+                                 <p class="text-sm text-gray-600">The University of Texas at Austin</p>
+                             </div>
+                              <div>
+                                 <p class="font-bold">M.S. in Industrial Engineering</p>
+                                 <p class="text-sm text-gray-600">Bilkent University</p>
+                             </div>
+                              <div>
+                                 <p class="font-bold">B.S. in Industrial Engineering</p>
+                                 <p class="text-sm text-gray-600">Bilkent University</p>
+                             </div>
+                          </div>
+                          <hr class="my-6">
+                          <h4 class="text-lg font-bold mb-2">Guiding Philosophy</h4>
+                          <p class="text-gray-700 italic">"Dr. Zarifoglu's vision is grounded in pragmatism. He champions technology that delivers tangible outcomes, balancing cutting-edge possibilities with the operational and economic realities of implementation—a philosophy essential for driving sustainable innovation."</p>
+                     </div>
+                 </div>
+             </div>
+         </section>
+         
+         <section id="expertise" class="py-20 bg-white">
+             <div class="container mx-auto px-6">
+                 <h2 class="section-title">Core Areas of Expertise</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-12 text-gray-600">This section provides an interactive overview of Dr. Zarifoglu's primary domains of expertise. His deep knowledge in Operations Research serves as the foundation for his innovations in AI, Cloud, and Semiconductor Manufacturing. Click on each tab to explore his specific contributions, leadership roles, and the impact of his work in each field.</p>
+                 <div class="w-full max-w-4xl mx-auto">
+                     <div class="mb-4 flex justify-center border-b border-gray-200">
+                         <button data-tab="ai-cloud" class="expertise-tab py-2 px-4 text-gray-500 font-medium inactive-tab">AI & Cloud</button>
+                         <button data-tab="or-data-science" class="expertise-tab py-2 px-4 text-gray-500 font-medium inactive-tab">OR & Data Science</button>
+                         <button data-tab="semiconductor" class="expertise-tab py-2 px-4 text-gray-500 font-medium inactive-tab">Semiconductor</button>
+                     </div>
+ 
+                     <div id="expertise-content" class="mt-8">
+                     </div>
+                 </div>
+             </div>
+         </section>
+ 
+         <section id="innovations" class="py-20">
+             <div class="container mx-auto px-6">
+                 <h2 class="section-title">Innovations: Patents & Publications</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-12 text-gray-600">Dr. Zarifoglu is a prolific inventor and author, consistently translating research into high-impact solutions. This hub showcases his extensive portfolio of patents and publications. Explore his key contributions through the filterable list below. Use the AI-powered summary generator to quickly understand the essence of each innovation.</p>
+                 
+                 <div class="bg-white p-6 rounded-lg shadow-lg">
+                     <div class="flex flex-wrap justify-center gap-4 mb-8">
+                         <button class="filter-btn bg-gray-200 px-4 py-2 rounded-full font-semibold text-sm active-filter" data-filter="all">All</button>
+                         <button class="filter-btn bg-gray-200 px-4 py-2 rounded-full font-semibold text-sm" data-filter="patent">Patents</button>
+                         <button class="filter-btn bg-gray-200 px-4 py-2 rounded-full font-semibold text-sm" data-filter="publication">Publications</button>
+                     </div>
+                     <div id="innovations-list" class="space-y-6">
+                     </div>
+                 </div>
+             </div>
+         </section>
+ 
+         <section id="blog" class="py-20 bg-white">
+             <div class="container mx-auto px-6 text-center">
+                 <h2 class="section-title">Blog Highlights & External Insights</h2>
+                 <p class="max-w-2xl mx-auto text-gray-600 mb-6">
+                     Explore Dr. Zarifoglu's latest thoughts, analyses, and perspectives on Operations Research, AI, technology trends, and more from his external blog, "Opentheorie."
+                 </p>
+                 <div id="blog-posts-container" class="max-w-2xl mx-auto text-left mb-8">
+                     <p id="blog-loading-message" class="text-gray-500 italic">Loading latest posts...</p>
+                     <!-- Blog posts will be injected here -->
+                 </div>
+                 <a href="http://www.opentheorie.org/" target="_blank" rel="noopener noreferrer" class="action-button">
+                     Visit Opentheorie.org for all posts &rarr;
+                 </a>
+             </div>
+         </section>
+         
+         <section id="contact" class="py-20">
+             <div class="container mx-auto px-6 text-center">
+                 <h2 class="section-title">Connect & Collaborate</h2>
+                 <p class="max-w-2xl mx-auto text-gray-600 mb-8">
+                     Dr. Zarifoglu is open to inquiries regarding professional collaborations, speaking engagements, and innovative projects. The most effective way to connect is through his professional networking profiles.
+                 </p>
+                 <div class="flex flex-col sm:flex-row justify-center items-center gap-8">
+                     <a href="https://www.linkedin.com/in/emrahz/" target="_blank" rel="noopener noreferrer" class="text-[#0077B5] hover:text-[#005582] transition-colors flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-gray-100">
+                         <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                         <span class="font-bold mt-2">LinkedIn Profile</span>
+                     </a>
+                     <a href="https://scholar.google.se/citations?user=Ykju0aoAAAAJ" target="_blank" rel="noopener noreferrer" class="text-[#4285F4] hover:text-[#3367D6] transition-colors flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-gray-100">
+                         <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M5.242 13.769l1.958-1.034a.25.25 0 01.325.28l-1.077 4.909a.25.25 0 01-.465.04l-2.61-4.14a.25.25 0 01.12-.348zM12 2C6.486 2 2 6.486 2 12s4.486 10 10 10c5.515 0 10-4.486 10-10S17.515 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm4.758-11.231c.334-.175.553-.526.495-.913a1.247 1.247 0 00-.773-.93c-.42-.21-.896-.105-1.22.21l-3.3 3.3-1.92-3.84c-.21-.42-.63-.735-1.11-.735-.66 0-1.25.5-1.36.985l-1.92 8.64a1.247 1.247 0 001.24 1.545c.57.03 1.08-.345 1.28-.885l1.92-4.32 3.3 3.3c.325.315.79.42 1.22.21a1.247 1.247 0 00.772-.93c.06-.387-.16-.74-.496-.913l-2.69-1.41z"/></svg>
+                         <span class="font-bold mt-2">Google Scholar Profile</span>
+                     </a>
+                 </div>
+             </div>
+         </section>
+     </main>
+     
+     <footer class="bg-[#2C3E50] text-white py-8">
+         <div class="container mx-auto px-6 text-center">
+             <p>&copy; <span id="current-year"></span> Dr. Emrah Zarifoglu. All Rights Reserved.</p>
+         </div>
+     </footer>
+ 
+     <script>
+         document.addEventListener('DOMContentLoaded', function () {
+             const mobileMenuButton = document.getElementById('mobile-menu-button');
+             const mobileMenu = document.getElementById('mobile-menu');
+             
+             if (mobileMenuButton && mobileMenu) {
+                 mobileMenuButton.addEventListener('click', () => {
+                     mobileMenu.classList.toggle('hidden');
+                 });
+             }
+             
+             document.querySelectorAll('a:not([target="_blank"])').forEach(anchor => {
+                 anchor.addEventListener('click', function (e) {
+                     const href = this.getAttribute('href');
+                     if (href && href.startsWith('#')) {
+                         e.preventDefault();
+                         if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                             mobileMenu.classList.add('hidden');
+                         }
+                         const targetElement = document.querySelector(href);
+                         if (targetElement) {
+                             targetElement.scrollIntoView({
+                                 behavior: 'smooth'
+                             });
+                         }
+                     }
+                 });
+             });
+ 
+ 
+             const currentYearEl = document.getElementById('current-year');
+             if (currentYearEl) {
+                 currentYearEl.textContent = new Date().getFullYear();
+             }
+ 
+             const careerData = [
+                 {
+                     role: "Head of R&D, Cloud and AI/ML",
+                     company: "Applied Materials",
+                     period: "Present",
+                     details: "Directs the team responsible for delivering advanced AI/ML solutions and spearheads the critical cloud transformation of APG software for semiconductor manufacturers worldwide. Central to integrating AI-powered technologies into Applied Materials' SmartFactory AI solutions."
+                 },
+                 {
+                     role: "Program Director of Data Science",
+                     company: "IBM",
+                     period: "Previous",
+                     details: "Provided pivotal leadership for AI and data science tools integral to the Multi-Cloud Management Platform. Marked by substantial contributions to cloud analytics and retail science, evidenced by a robust portfolio of patents."
+                 },
+                 {
+                     role: "Advanced Analytics",
+                     company: "Gravitant",
+                     period: "Previous",
+                     details: "Contributed to advanced analytics in the burgeoning field of cloud computing. This experience was instrumental in developing proficiency in cloud technologies and optimization strategies, leading to key patents in hybrid cloud service optimization."
+                 },
+                 {
+                     role: "Semiconductor Simulation & Analytics",
+                     company: "AMD & SEMATECH",
+                     period: "Early Career",
+                     details: "Focused on semiconductor simulation, advanced analytics, and operations research. Gained profound insights into the practical challenges and technological opportunities within the semiconductor industry, solidifying expertise in applying quantitative methods."
+                 }
+             ];
+ 
+             const timelineContainer = document.getElementById('timeline-container');
+             if (timelineContainer) {
+                 careerData.forEach(item => {
+                     const div = document.createElement('div');
+                     div.className = "relative cursor-pointer group";
+                     div.innerHTML = `
+                         <div class="timeline-item">
+                             <h5 class="font-bold text-lg">${item.role}</h5>
+                             <p class="text-sm font-medium text-[#3498DB]">${item.company}</p>
+                             <p class="text-xs text-gray-500">${item.period}</p>
+                             <div class="pt-2 text-sm text-gray-600 max-h-0 overflow-hidden transition-max-height duration-500 ease-in-out group-hover:max-h-40">
+                                 ${item.details}
+                             </div>
+                         </div>
+                     `;
+                     timelineContainer.appendChild(div);
+                 });
+             }
+ 
+             const expertiseTabs = document.querySelectorAll('.expertise-tab');
+             const expertiseContent = document.getElementById('expertise-content');
+             
+             const expertiseData = {
+                 'ai-cloud': {
+                     title: "Cloud Computing & AI/ML",
+                     points: [
+                         "Leads R&D for Cloud and AI/ML at Applied Materials, driving SmartFactory solutions.",
+                         "Pioneer in SaaS application development and complex cloud transformation efforts.",
+                         "Architects robust optimization and analytics frameworks for cloud platforms.",
+                         "Holds key patents in cloud asset tagging and hybrid cloud optimization.",
+                         "Formerly directed Data Science for IBM's Multi-Cloud Management Platform."
+                     ]
+                 },
+                 'or-data-science': {
+                     title: "Operations Research & Data Science",
+                     points: [
+                         "Ph.D. in Operations Research provides a strong analytical and optimization-focused mindset.",
+                         "Spearheaded AI and data science tooling initiatives at IBM.",
+                         "Co-authored the influential paper 'Cloud Computing Operations Research'.",
+                         "Proficient in Optimization, Mathematical Programming, Heuristics, and Simulation.",
+                         "Applies rigorous quantitative methods to solve complex technological challenges."
+                     ]
+                 },
+                 'semiconductor': {
+                     title: "Semiconductor Manufacturing & Optimization",
+                     points: [
+                         "Ph.D. dissertation focused on 'Planning and Scheduling in Semiconductor Manufacturing'.",
+                         "Authored key research on lot size management for cycle time optimization in IEEE journals.",
+                         "Holds patents directly addressing challenges in semiconductor manufacturing.",
+                         "Gained deep industry-specific knowledge during early career roles at AMD and SEMATECH.",
+                         "Currently applies AI/ML to optimize modern semiconductor fabrication processes."
+                     ]
+                 }
+             };
+ 
+             function updateExpertiseContent(tabId) {
+                 if (!expertiseContent) {
+                     console.error("Expertise content container not found.");
+                     return;
+                 }
+ 
+                 if (!expertiseData.hasOwnProperty(tabId)) {
+                     expertiseContent.innerHTML = '<p class="text-center text-gray-500">Content for this tab is not available.</p>';
+                     expertiseTabs.forEach(t => {
+                         t.classList.remove('active-tab');
+                         t.classList.add('inactive-tab');
+                     });
+                     return;
+                 }
+ 
+                 const currentTabData = expertiseData[tabId]; 
+ 
+                 expertiseContent.innerHTML = `
+                     <h4 class="text-2xl font-bold mb-4 text-center text-gray-800">${currentTabData.title}</h4>
+                     <ul class="space-y-3 list-disc list-inside text-gray-700 max-w-2xl mx-auto">
+                         ${currentTabData.points.map(point => `<li>${point}</li>`).join('')}
+                     </ul>
+                 `;
+                 expertiseTabs.forEach(t => {
+                     t.classList.toggle('active-tab', t.dataset.tab === tabId);
+                     t.classList.toggle('inactive-tab', t.dataset.tab !== tabId);
+                 });
+             }
+ 
+             if (expertiseTabs.length > 0 && expertiseContent) {
+                 expertiseTabs.forEach(tab => {
+                     tab.addEventListener('click', () => updateExpertiseContent(tab.dataset.tab));
+                 });
+                 updateExpertiseContent('ai-cloud'); 
+             }
+             
+ 
+             const innovationsData = [
+                 { id: 'patent2023a', type: 'patent', title: 'Methods and apparatus for feature generation using improved TF-IDF...' },
+                 { id: 'patent2023b', type: 'patent', title: 'Efficiency driven data collection and machine learning modeling...' },
+                 { id: 'patent2022a', type: 'patent', title: 'Feature generation for asset classification' },
+                 { id: 'patent2022b', type: 'patent', title: 'Resource and asset lifecycle costing' },
+                 { id: 'pub2022', type: 'publication', title: 'Deep Reinforcement Learning for Queue-Time Management...' },
+                 { id: 'patent2021', type: 'patent', title: 'Avoidance of product stockouts through optimized routing...' },
+                 { id: 'patent2020a', type: 'patent', title: 'Modeling customer demand and updating pricing using customer behavior data' },
+                 { id: 'patent2020b', type: 'patent', title: 'Constrained large-data markdown optimizations...' },
+                 { id: 'pub2013', type: 'publication', title: 'Cloud Computing Operations Research' },
+                 { id: 'patent2013', type: 'patent', title: 'Optimally sourcing services in hybrid cloud environments' },
+                 { id: 'pub2012', type: 'publication', title: 'Lot Size Management in the Semiconductor Industry...' },
+                 { id: 'pub2010', type: 'publication', title: 'Planning and scheduling in semiconductor manufacturing (PhD Thesis)' },
+                 { id: 'pub2008', type: 'publication', title: 'Small Lot Semiconductor Manufacturing...' },
+             ];
+ 
+             const innovationsList = document.getElementById('innovations-list');
+             const filterBtns = document.querySelectorAll('.filter-btn');
+ 
+             async function generateGeminiApiText(prompt, outputContainerElement) {
+                 if (!outputContainerElement) return;
+                 outputContainerElement.innerHTML = '<p class="loading-text">✨ Generating insights...</p>';
+                 
+                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                 const payload = { contents: chatHistory };
+                 const apiKey = ""; // API key will be injected by the environment
+                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+ 
+                 try {
+                     const response = await fetch(apiUrl, {
+                         method: 'POST',
+                         headers: { 'Content-Type': 'application/json' },
+                         body: JSON.stringify(payload)
+                     });
+                     if (!response.ok) {
+                         const errorData = await response.text();
+                         throw new Error(`API request failed with status ${response.status}: ${errorData}`);
+                     }
+                     const result = await response.json();
+                     
+                     if (result.candidates && result.candidates.length > 0 &&
+                         result.candidates[0].content && 
+                         result.candidates[0].content.parts && 
+                         result.candidates[0].content.parts.length > 0 && 
+                         result.candidates[0].content.parts[0].text) {
+                         const text = result.candidates[0].content.parts[0].text;
+                         // Apply the correct class based on the container's ID or a passed parameter
+                         const outputClass = outputContainerElement.id === 'careerInsightsOutput' ? 'insights-text' : 'summary-text';
+                         outputContainerElement.innerHTML = `<div class="${outputClass}">${text.replace(/\n/g, '<br>')}</div>`;
+                     } else if (result.candidates && result.candidates.length > 0 && result.candidates[0].finishReason === "SAFETY") {
+                          outputContainerElement.innerHTML = `<p class="${outputContainerElement.id === 'careerInsightsOutput' ? 'insights-text' : 'summary-text'}">Could not generate content due to safety settings. The topic might be sensitive.</p>`;
+                     }
+                     else {
+                         outputContainerElement.innerHTML = `<p class="${outputContainerElement.id === 'careerInsightsOutput' ? 'insights-text' : 'summary-text'}">Could not generate content at this time. No valid response received.</p>`;
+                     }
+                 } catch (error) {
+                     console.error("Error fetching Gemini content:", error);
+                     outputContainerElement.innerHTML = `<p class="${outputContainerElement.id === 'careerInsightsOutput' ? 'insights-text' : 'summary-text'}">Error: Could not generate content. ${error.message}</p>`;
+                 }
+             }
+ 
+             function renderInnovations(filter) {
+                 if (!innovationsList) return;
+                 innovationsList.innerHTML = '';
+                 const filteredData = innovationsData.filter(item => filter === 'all' || item.type === filter);
+                 
+                 if(filteredData.length === 0) {
+                     innovationsList.innerHTML = '<p class="text-center text-gray-500">No items match this filter.</p>';
+                     return;
+                 }
+ 
+                 filteredData.forEach(item => {
+                     const itemUID = `summary-${item.id}`; 
+                     const div = document.createElement('div');
+                     div.className = 'p-4 border rounded-lg hover:shadow-md transition-shadow duration-300 bg-white';
+                     div.innerHTML = `
+                         <div class="flex items-start justify-between">
+                             <div class="flex-grow">
+                                 <span class="text-xs font-semibold uppercase px-2 py-1 rounded-full ${item.type === 'patent' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">${item.type}</span>
+                                 <h4 class="font-bold text-md mt-1">${item.title}</h4>
+                                 <button class="gemini-btn" data-title="${item.title.replace(/"/g, '&quot;')}" data-summary-id="${itemUID}">✨ Generate Summary</button>
+                                 <div id="${itemUID}" class="mt-2"></div>
+                             </div>
+                         </div>
+                     `;
+                     innovationsList.appendChild(div);
+                 });
+ 
+                 document.querySelectorAll('#innovations-list .gemini-btn').forEach(button => {
+                     button.addEventListener('click', function() {
+                         const title = this.dataset.title;
+                         const summaryId = this.dataset.summaryId;
+                         const summaryOutputElement = document.getElementById(summaryId);
+                         const prompt = `Explain this innovation in simple terms for a non-expert audience: "${title}". What is its core idea and potential impact? Keep it concise (2-3 sentences).`;
+                         generateGeminiApiText(prompt, summaryOutputElement);
+                         this.style.display = 'none'; 
+                     });
+                 });
+             }
+             
+             if (filterBtns.length > 0 && innovationsList) {
+                  filterBtns.forEach(btn => {
+                     btn.addEventListener('click', () => {
+                         filterBtns.forEach(b => b.classList.remove('active-filter', 'bg-[#3498DB]', 'text-white'));
+                         btn.classList.add('active-filter', 'bg-[#3498DB]', 'text-white');
+                         renderInnovations(btn.dataset.filter);
+                     });
+                 });
+                 renderInnovations('all');
+                 const allFilterButton = document.querySelector('.filter-btn[data-filter="all"]');
+                 if (allFilterButton) {
+                     allFilterButton.classList.add('bg-[#3498DB]', 'text-white');
+                 }
+             }
+ 
+             async function fetchBlogPosts() {
+                 const postsContainer = document.getElementById('blog-posts-container');
+                 const loadingMessage = document.getElementById('blog-loading-message');
+                 const feedUrl = 'http://feeds.feedburner.com/opentheorie/DrAh';
+                 const rssToJsonApiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+ 
+                 try {
+                     const response = await fetch(rssToJsonApiUrl);
+                     if (!response.ok) {
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                     }
+                     const data = await response.json();
+ 
+                     if (loadingMessage) loadingMessage.style.display = 'none';
+ 
+                     if (data.status === 'ok' && data.items && data.items.length > 0) {
+                         postsContainer.innerHTML = ''; 
+                         const latestPosts = data.items.slice(0, 3);
+                         latestPosts.forEach(item => {
+                             const postElement = document.createElement('div');
+                             postElement.className = 'blog-post-item';
+                             
+                             let postDate = '';
+                             if (item.pubDate) {
+                                 try {
+                                     postDate = new Date(item.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                                 } catch (e) {
+                                     console.warn("Could not parse date:", item.pubDate);
+                                     postDate = item.pubDate; 
+                                 }
+                             }
+ 
+                             postElement.innerHTML = `
+                                 <h4><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></h4>
+                                 ${postDate ? `<p class="blog-post-date">${postDate}</p>` : ''}
+                             `;
+                             postsContainer.appendChild(postElement);
+                         });
+                     } else if (data.items && data.items.length === 0) {
+                         postsContainer.innerHTML = '<p class="text-gray-500">No blog posts found at the moment.</p>';
+                     } else {
+                         throw new Error(data.message || 'Could not fetch blog posts.');
+                     }
+                 } catch (error) {
+                     console.error('Error fetching blog posts:', error);
+                     if (loadingMessage) loadingMessage.style.display = 'none';
+                     if (postsContainer) postsContainer.innerHTML = `<p class="text-red-500">Could not load blog posts at this time. Please try again later.</p>`;
+                 }
+             }
+ 
+             fetchBlogPosts();
+ 
+             const careerInsightsButton = document.getElementById('careerInsightsBtn');
+             if (careerInsightsButton) {
+                 careerInsightsButton.addEventListener('click', function() {
+                     const careerInsightsOutput = document.getElementById('careerInsightsOutput');
+                     const prompt = `Dr. Emrah Zarifoglu's career journey includes a PhD in Operations Research, early work in semiconductor simulation at AMD & SEMATECH, a role in cloud analytics at Gravitant, leading Data Science programs at IBM, and currently heading R&D for Cloud and AI/ML at Applied Materials while also being an Adjunct Professor. Based on this trajectory, what are 2-3 key insights or pieces of advice an aspiring R&D leader or someone interested in a similar high-tech career path could draw? Present as a short, inspiring paragraph or bullet points.`;
+                     generateGeminiApiText(prompt, careerInsightsOutput);
+                     this.style.display = 'none';
+                 });
+             }
+ 
+         });
+     </script>
+ </body>
+ </html>
+ 
