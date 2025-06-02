@@ -130,15 +130,20 @@
             margin: 1rem auto 0.5rem auto; 
             padding: 0.5rem 1rem;
          }
-         .profile-picture {
+         .profile-picture { /* General styling for profile picture */
             width: 180px; 
             height: 180px; 
             border-radius: 50%; 
             object-fit: cover; 
-            margin-top: 2rem; 
-            margin-bottom: 1rem; 
             border: 4px solid #EAEAEA; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+         }
+         .profile-picture-hero { /* Specific for hero section if needed */
+            margin-top: 2rem; 
+            margin-bottom: 1rem; 
+         }
+         .profile-picture-about { /* Specific for about section */
+            margin: 0 auto 1.5rem auto; /* Centered with bottom margin */
          }
      </style>
  </head>
@@ -171,10 +176,6 @@
      <main>
          <section id="hero" class="py-20 md:py-32 bg-white">
              <div class="container mx-auto px-6 text-center">
-                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvFLlovb9QS-s6OmqloBF7IDNkHUa_YX0Kp13tgo_emTjGZDrwLx6s_oFwp101T4jgOTDVmlwaNy1v5wzkzecH78zhILLoY6BsVSWiw3srfUW269k_njxPeqBEv7IjI-w/s220/portrait_EZ.jpg" 
-                      alt="Dr. Emrah Zarifoglu" 
-                      class="profile-picture mx-auto"
-                      onerror="this.onerror=null; this.src='https://placehold.co/180x180/EAEAEA/2C3E50?text=E.Z.';">
                  <h1 class="text-4xl md:text-6xl font-bold leading-tight text-gray-900 mt-4">Dr. Emrah Zarifoglu</h1>
                  <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Pioneering R&D Leader at the intersection of Artificial Intelligence, Cloud Computing, and Operations Research for the Semiconductor Industry.</p>
                  <div class="mt-8 flex justify-center gap-4">
@@ -201,7 +202,11 @@
                              </div>
                          </div>
                      </div>
-                     <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+                     <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg text-center md:text-left">
+                         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvFLlovb9QS-s6OmqloBF7IDNkHUa_YX0Kp13tgo_emTjGZDrwLx6s_oFwp101T4jgOTDVmlwaNy1v5wzkzecH78zhILLoY6BsVSWiw3srfUW269k_njxPeqBEv7IjI-w/s220/portrait_EZ.jpg" 
+                              alt="Dr. Emrah Zarifoglu" 
+                              class="profile-picture profile-picture-about"
+                              onerror="this.onerror=null; this.src='https://placehold.co/180x180/EAEAEA/2C3E50?text=E.Z.';">
                          <h3 class="text-2xl font-bold mb-4">Education & Vision</h3>
                           <div class="space-y-4">
                               <div>
